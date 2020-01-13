@@ -30,6 +30,10 @@ func main() {
 
 	// Specify type and perform a conversion.
 	aaa := int32(10)
-
 	fmt.Printf("aaa := int32(10) %T [%v]\n", aaa, aaa)
+        // aaa = int64(10) 
+        // or 
+        // aaa = int8(10)
+        // The above is error and is not possible. If you need different type
+        // declare new variable and use it.
 }
