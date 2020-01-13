@@ -48,4 +48,8 @@ func main() {
 	fmt.Println("Flag", e2.flag)
 	fmt.Println("Counter", e2.counter)
 	fmt.Println("Pi", e2.pi)
+        var c alice
+        c = e2
+	fmt.Printf("c address: %p\n", &c)
+	fmt.Printf("e2 address: %p\n", &e2)
 }
