@@ -11,7 +11,8 @@ func main() {
 	// Untyped Constants.
 	const ui = 12345    // kind: integer
 	const uf = 3.141592 // kind: floating-point
-
+        // Much larger value than int64 can hold
+        const bigger = 9223372036854775808543522345
 	// Typed Constants still use the constant type system but their precision
 	// is restricted.
 	const ti int = 12345        // type: int
