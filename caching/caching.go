@@ -75,3 +75,33 @@ func LinkedListTraverse() int {
 
 	return ctr
 }
+
+// ColumnTraverse traverses the matrix linearly down each column.
+func ColumnTraverse() int {
+	var ctr int
+
+	for col := 0; col < cols; col++ {
+		for row := 0; row < rows; row++ {
+			if matrix[row][col] == 0xFF {
+				ctr++
+			}
+		}
+	}
+
+	return ctr
+}
+
+// RowTraverse traverses the matrix linearly down each row.
+func RowTraverse() int {
+	var ctr int
+
+	for row := 0; row < rows; row++ {
+		for col := 0; col < cols; col++ {
+			if matrix[row][col] == 0xFF {
+				ctr++
+			}
+		}
+	}
+
+	return ctr
+}
