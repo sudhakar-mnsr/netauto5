@@ -4,7 +4,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/ardanlabs/gotraining/topics/go/language/exporting/example1/counters"
+	"example1/counters"
 )
 
 func main() {
