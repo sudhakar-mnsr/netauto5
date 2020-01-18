@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/ardanlabs/gotraining/topics/go/testing/tests/example4/handlers"
+	"example4/handlers"
 )
 
 func main() {
