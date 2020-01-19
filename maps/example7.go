@@ -17,3 +17,9 @@ func main() {
 	// See the change is visible in our map.
 	fmt.Println("Score:", scores["anna"])
 }
+
+// double finds the score for a specific player and
+// multiplies it by 2.
+func double(scores map[string]int, player string) {
+	scores[player] = scores[player] * 2
+}
