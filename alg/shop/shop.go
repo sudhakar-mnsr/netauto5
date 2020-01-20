@@ -79,3 +79,24 @@ func (s *Shop) Close() {
 	close(s.chairs)
 	s.wgClose.Wait()
 }
+
+// EnterCustomer is called to create a customer to be serviced. If
+// the shop is closed the function returns an error. If the shop is open,
+// a goroutine is created to handle the customers concurrently.
+func (s *Shop) EnterCustomer(name string) error {
+	if atomic.LoadInt32(&s.open) == 0 {
+		return ErrShopClosed
+	}
+
+	s.wgEnter.Add(1)
+	go func() {
+		defer s.wgEnter.Done()
+		select {
+		case s.chairs <- customer{name: name}:
+		default:
+			fmt.Printf("No chair for customer %q\n", name)
+		}
+	}()
+
+	return nil
+}
