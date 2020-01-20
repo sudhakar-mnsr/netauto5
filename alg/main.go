@@ -12,3 +12,18 @@ import (
 
 	"github.com/ardanlabs/gotraining/topics/go/algorithms/fun/barber/shop"
 )
+
+func main() {
+	const maxChairs = 10
+	s := shop.Open(maxChairs)
+
+	// Create a goroutine than is constantly, but inconsistently, generating
+	// customers who are entering the shop.
+
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt)
+	<-sigChan
+
+	fmt.Println("Shutting down shop")
+	s.Close()
+}
