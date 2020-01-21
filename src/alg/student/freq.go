@@ -17,3 +17,28 @@ func Sequential(text []string) map[rune]int {
 	}
 	return m
 }
+
+// ConcurrentUnlimited uses a concurrent algorithm based on an
+// unlimited fan out pattern.
+func ConcurrentUnlimited(text []string) map[rune]int {
+	ch := make(chan map[rune]int, len(text))
+	for _, words := range text {
+		go func(words string) {
+			lm := make(map[rune]int)
+			for _, r := range words {
+				lm[r]++
+			}
+			ch <- lm
+		}(words)
+	}
+
+	all := make(map[rune]int)
+	for range text {
+		lm := <-ch
+		for r, c := range lm {
+			all[r] += c
+		}
+	}
+
+	return all
+}
