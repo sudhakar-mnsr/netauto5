@@ -2,12 +2,18 @@
 // is found in a collection of text documents.
 package freq
 
+import (
+	"runtime"
+	"sync"
+)
+
 // Sequential uses a sequential algorithm.
 func Sequential(text []string) map[rune]int {
-	return nil
-}
-
-// Concurrent uses a concurrent algorithm.
-func Concurrent(text []string) map[rune]int {
-	return nil
+	m := make(map[rune]int)
+	for _, words := range text {
+		for _, r := range words {
+			m[r]++
+		}
+	}
+	return m
 }
