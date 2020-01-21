@@ -40,3 +40,15 @@ var out = map[rune]int{
 	'o': 11, 'm': 5, '\n': 2, 'x': 1, 'y': 8, 'S': 3, 'K': 1, 'k': 1, 'n': 10,
 	't': 8, 'a': 8, 'M': 1,
 }
+
+func TestCount(t *testing.T) {
+	t.Log("Given the need to test Frequency Count.")
+	{
+		tests := []struct {
+			name  string
+			count func(text []string) map[rune]int
+		}{
+			{"Sequential", freq.Sequential},
+			{"Concurrent", freq.Concurrent},
+		}
+
