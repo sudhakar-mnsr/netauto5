@@ -86,3 +86,44 @@ func ConcurrentBounded(text []string) map[rune]int {
 	wg.Wait()
 	return m
 }
+
+// ConcurrentBoundedChannel uses a concurrent algorithm based on a bounded
+// fan out using a channel.
+func ConcurrentBoundedChannel(text []string) map[rune]int {
+	m := make(map[rune]int)
+
+	g := runtime.NumCPU()
+	var wg sync.WaitGroup
+	wg.Add(g)
+
+	var mu sync.Mutex
+	ch := make(chan string, len(text))
+
+	for i := 0; i < g; i++ {
+		go func() {
+			lm := make(map[rune]int)
+			defer func() {
+				mu.Lock()
+				defer mu.Unlock()
+				for k, v := range lm {
+					m[k] = m[k] + v
+				}
+				wg.Done()
+			}()
+
+			for words := range ch {
+				for _, r := range words {
+					lm[r]++
+				}
+			}
+		}()
+	}
+
+	for _, words := range text {
+		ch <- words
+	}
+	close(ch)
+
+	wg.Wait()
+	return m
+}
