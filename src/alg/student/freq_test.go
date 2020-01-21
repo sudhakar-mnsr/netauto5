@@ -3,7 +3,7 @@ package freq_test
 import (
 	"testing"
 
-	freq "student/freq"
+	"github.com/ardanlabs/gotraining/topics/go/algorithms/fun/freq"
 )
 
 // go test -run none -bench . -benchtime 3s
@@ -41,6 +41,32 @@ var out = map[rune]int{
 	't': 8, 'a': 8, 'M': 1,
 }
 
+var m map[rune]int
+
+func BenchmarkSequential(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		m = freq.Sequential(inp)
+	}
+}
+
+func BenchmarkConcurrentBounded(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		m = freq.ConcurrentBounded(inp)
+	}
+}
+
+func BenchmarkConcurrentBoundedChannel(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		m = freq.ConcurrentBoundedChannel(inp)
+	}
+}
+
+func BenchmarkConcurrentUnlimited(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		m = freq.ConcurrentUnlimited(inp)
+	}
+}
+
 func TestCount(t *testing.T) {
 	t.Log("Given the need to test Frequency Count.")
 	{
@@ -49,8 +75,11 @@ func TestCount(t *testing.T) {
 			count func(text []string) map[rune]int
 		}{
 			{"Sequential", freq.Sequential},
-			{"Concurrent", freq.Concurrent},
+			{"ConcurrentBounded", freq.ConcurrentBounded},
+			{"ConcurrentBoundedChannel", freq.ConcurrentBoundedChannel},
+			{"ConcurrentUnlimited", freq.ConcurrentUnlimited},
 		}
+
 		for i, tt := range tests {
 			t.Logf("\tTest %d:\tWhen running %q", i, tt.name)
 			{
