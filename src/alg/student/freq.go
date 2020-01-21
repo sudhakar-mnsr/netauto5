@@ -42,3 +42,47 @@ func ConcurrentUnlimited(text []string) map[rune]int {
 
 	return all
 }
+
+// ConcurrentBounded uses a concurrent algorithm based on a bounded
+// fan out and no channels.
+func ConcurrentBounded(text []string) map[rune]int {
+	m := make(map[rune]int)
+
+	goroutines := runtime.NumCPU()
+	totalNumbers := len(text)
+	lastGoroutine := goroutines - 1
+	stride := totalNumbers / goroutines
+
+	var mu sync.Mutex
+	var wg sync.WaitGroup
+	wg.Add(goroutines)
+
+	for g := 0; g < goroutines; g++ {
+		go func(g int) {
+			lm := make(map[rune]int)
+			defer func() {
+				mu.Lock()
+				defer mu.Unlock()
+				for k, v := range lm {
+					m[k] = m[k] + v
+				}
+				wg.Done()
+			}()
+
+			start := g * stride
+			end := start + stride
+			if g == lastGoroutine {
+				end = totalNumbers
+			}
+
+			for _, words := range text[start:end] {
+				for _, r := range words {
+					lm[r]++
+				}
+			}
+		}(g)
+	}
+
+	wg.Wait()
+	return m
+}
