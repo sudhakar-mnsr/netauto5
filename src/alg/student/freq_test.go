@@ -66,3 +66,16 @@ func BenchmarkConcurrentUnlimited(b *testing.B) {
 		m = freq.ConcurrentUnlimited(inp)
 	}
 }
+
+func TestCount(t *testing.T) {
+	t.Log("Given the need to test Frequency Count.")
+	{
+		tests := []struct {
+			name  string
+			count func(text []string) map[rune]int
+		}{
+			{"Sequential", freq.Sequential},
+			{"ConcurrentBounded", freq.ConcurrentBounded},
+			{"ConcurrentBoundedChannel", freq.ConcurrentBoundedChannel},
+			{"ConcurrentUnlimited", freq.ConcurrentUnlimited},
+		}
