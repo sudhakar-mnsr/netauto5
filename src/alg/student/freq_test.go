@@ -79,3 +79,32 @@ func TestCount(t *testing.T) {
 			{"ConcurrentBoundedChannel", freq.ConcurrentBoundedChannel},
 			{"ConcurrentUnlimited", freq.ConcurrentUnlimited},
 		}
+		for i, tt := range tests {
+			t.Logf("\tTest %d:\tWhen running %q", i, tt.name)
+			{
+				f := tt.count(inp)
+
+				if len(f) != len(out) {
+					t.Logf("\t%s\tShould get back the same number of runes.", failed)
+				}
+				t.Logf("\t%s\tShould get back the same number of runes.", succeed)
+
+				for r, c := range f {
+					if c2, ok := out[r]; !ok || c != c2 {
+						t.Logf("\t%s\tShould see ranging over result matches the output.", failed)
+						t.Fatalf("\t\tRune: %c  Got %d, Expected %d.", r, c, c2)
+					}
+				}
+				t.Logf("\t%s\tShould see ranging over result matches the output.", succeed)
+
+				for r, c := range out {
+					if c2, ok := f[r]; !ok || c != c2 {
+						t.Logf("\t%s\tShould see ranging over output matches the result.", failed)
+						t.Fatalf("\t\tRune: %c  Got %d, Expected %d.", r, c, c2)
+					}
+				}
+				t.Logf("\t%s\tShould see ranging over output matches the result.", succeed)
+			}
+		}
+	}
+}
