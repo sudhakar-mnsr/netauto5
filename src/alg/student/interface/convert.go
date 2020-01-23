@@ -1,3 +1,10 @@
+package main
+
+import (
+   "fmt"
+   "strconv"
+)
+
 type Stringer interface {
     String() string
 }
@@ -13,4 +20,8 @@ func ToString(any interface{}) string {
         return strconv.Ftoa(v, 'g', -1)
     }
     return "???"
+}
+
+func main() {
+   fmt.Println(ToString(1))
 }
