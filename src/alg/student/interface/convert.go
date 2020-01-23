@@ -16,8 +16,8 @@ func ToString(any interface{}) string {
     switch v := any.(type) {
     case int:
         return strconv.Itoa(v)
-    case float:
-        return strconv.Ftoa(v, 'g', -1)
+//    case float32:
+//        return strconv.Ftoa(v, 'g', -1)
     }
     return "???"
 }
