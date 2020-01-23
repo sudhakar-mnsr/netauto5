@@ -1,3 +1,7 @@
+package main
+
+import "fmt"
+
 type base struct {
 	a string
 	b int
