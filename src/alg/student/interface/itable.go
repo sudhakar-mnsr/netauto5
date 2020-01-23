@@ -54,3 +54,10 @@ func main
   for each animal in animals
      print animal.Speak() // method dispatch via jmp-table
 */
+
+func main() {
+	animals := []Animal{Dog{}, Cat{}, Llama{}}
+	for _, animal := range animals {
+		fmt.Println(animal.Speak()) // method dispatch via jmp-table
+	}
+}
