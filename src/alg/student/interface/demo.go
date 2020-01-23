@@ -1,3 +1,10 @@
+package main
+
+import (
+   "fmt"
+   "strconv"
+)
+ 
 type Stringer interface {
     String() string
 }
