@@ -1,3 +1,7 @@
+type Stringer interface {
+    String() string
+}
+
 type Binary uint64
 
 func (i Binary) String() string {
