@@ -16,6 +16,17 @@ func (file) read(b []byte) (int, error) {
    return len(s), nil
 }
 
+type pipe struct {
+   name string
+}
+
+// read implements the reader interface for a network connection.
+func (pipe) read(b []byte) (int, error) {
+   s := `{name: "bill", title: "developer"}`
+   copy(b, s)
+   return len(s), nil
+}
+
 func main() {
    f := file{"data.Json"}
    retrieveFile(f)
@@ -25,6 +36,18 @@ func retrieveFile(f file) error {
    data := make([]byte, 100)
    
    len, err := f.read(data)
+   if err != nil {
+      return err
+   }
+
+   fmt.Println(string(data[:len]))
+   return nil
+}
+
+func retrievePipe(p pipe) error {
+   data := make([]byte, 100)
+
+   len, err := p.read(data)
    if err != nil {
       return err
    }
