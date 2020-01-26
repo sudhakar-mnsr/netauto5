@@ -13,3 +13,9 @@ type data struct {
 func (d data) displayName() {
 	fmt.Println("My Name Is", d.name)
 }
+
+// setAge sets the age and displays the value.
+func (d *data) setAge(age int) {
+	d.age = age
+	fmt.Println(d.name, "Is Age", d.age)
+}
