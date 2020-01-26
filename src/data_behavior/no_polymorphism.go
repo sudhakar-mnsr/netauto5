@@ -29,7 +29,10 @@ func (pipe) read(b []byte) (int, error) {
 
 func main() {
    f := file{"data.Json"}
+   p := pipe{"cfg_service"}
+
    retrieveFile(f)
+   retrievePipe(p)
 }
 
 func retrieveFile(f file) error {
