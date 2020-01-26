@@ -19,12 +19,23 @@ func (file) read(b []byte) (int, error) {
    return len(s), nil
 }
 
-func main() {
-// create two values one of type file and one of type pipe
-f := file{"data.json"}
+type pipe struct {
+   name string
+}
+func (pipe) read(b []byte) (int, error) {
+   s := `{name: "bill", title: "developer"}`
+   copy(b, s)
+   return len(s), nil
+}
 
-// Call retrieve function for each concrete type
-retrieve(f)
+func main() {
+   // create two values one of type file and one of type pipe
+   f := file{"data.json"}
+   p := pipe{"cfg_service"}
+   
+   // Call retrieve function for each concrete type
+   retrieve(f)
+   retrieve(p)
 }
 
 // retrieve can read any device and process the data
@@ -39,3 +50,4 @@ func retrieve(r reader) error {
    fmt.Println(string(data[:len]))
    return nil
 }
+
