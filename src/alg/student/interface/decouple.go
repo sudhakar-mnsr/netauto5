@@ -57,3 +57,20 @@ func main() {
 	f1()
 
 	// =========================================================================
+
+	fmt.Println("\nCall Pointer Receiver Method with Variable:")
+
+	// Declare a function variable for the method bound to the d variable.
+	// The function variable will get the address of d because the method
+	// is using a pointer receiver.
+	f2 := d.setAge
+
+	// Call the method via the variable.
+	f2(45)
+
+	// Change the value of d.
+	d.name = "Sammy"
+
+	// Call the method via the variable. We see the change.
+	f2(45)
+}
