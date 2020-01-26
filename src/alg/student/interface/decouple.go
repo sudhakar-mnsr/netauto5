@@ -38,3 +38,22 @@ func main() {
 	// This is what Go is doing underneath.
 	// data.displayName(d)
 	// (*data).setAge(&d, 45)
+	// =========================================================================
+
+	fmt.Println("\nCall Value Receiver Methods with Variable:")
+
+	// Declare a function variable for the method bound to the d variable.
+	// The function variable will get its own copy of d because the method
+	// is using a value receiver.
+	f1 := d.displayName
+
+	// Call the method via the variable.
+	f1()
+
+	// Change the value of d.
+	d.name = "Joan"
+
+	// Call the method via the variable. We don't see the change.
+	f1()
+
+	// =========================================================================
