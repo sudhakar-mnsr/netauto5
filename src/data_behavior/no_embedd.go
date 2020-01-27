@@ -16,3 +16,22 @@ type user struct {
 func (u *user) notify() {
    fmt.Printf("Sending user email To %s<%s>\n", u.name, u.email)
 }
+ 
+// admin represents an admin user with extra privileges
+type admin struct {
+   person user // Not Embedding
+   level string
+}
+
+func main() {
+   ad := admin{
+      person: user{
+         name: "John Smith",
+         email: "john@yahoo.com",
+      },
+      level: "super",
+   }
+   // We can access fields methods
+   ad.person.notify()
+}
+
