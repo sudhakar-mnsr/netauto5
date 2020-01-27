@@ -31,9 +31,10 @@ func main() {
 // Create admin user
 ad := admin{
    user: user{
-      name: "John Smith"
-      email: "john@yahoo.com"
-   }
+      name: "John Smith",
+      email: "john@yahoo.com",
+   },
+   level: "super",
 }
 
 // Send the admin user a notification.
