@@ -75,4 +75,39 @@ type System struct {
 }
 // =============================================================================
 
+// pull knows how to pull bulks of data from any Puller
+func pull(p Puller, data[]Data) (int, error) {
+   for i := range data {
+      if err := p.Pull(&data[i]); err != nil {
+         return i, err
+      }
+   }
+   return len(data), nil
+}
 
+// Store knows how to store bulks of data from any storer
+func store(s Storer, data []Data) (int, error) {
+   for i := range data {
+       if err := s.Store(&data[i]); err != nil {
+          return i, err
+       }
+   }
+   return len(data), nil
+}
+
+// Copy knows how to pull and store data from any system
+func Copy(ps PullStorer, batch int) error {
+   data := make([]Data, batch)
+   for {
+      i, err := pull(ps, data)
+      if i > 0 {
+         if _, err := store(ps, data[:i]); err != nil {
+            return err
+         }
+      }
+      if err != nil {
+         return err
+      }
+   }
+}
+// =============================================================================
