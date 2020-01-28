@@ -78,5 +78,21 @@ func store(p *Pillar, data []Data) (int, error) {
    }
 }
  
+// Copy knows how to pull and store data from the system.
+func Copy(sys *System, batch int) error {
+   data := make([]Data, batch)
+   for {
+      i, err := pull(&sys.Xenia, data)
+      if i > 0 {
+         if _, err := store(&sys.Pillar, data[:i]) {
+            return err
+         }
+      }
+      if err != nil {
+         return err
+      }
+   }
+}
+// ================================================================
 
 
