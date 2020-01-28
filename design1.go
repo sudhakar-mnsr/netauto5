@@ -39,3 +39,16 @@ func (*Xenia) Pull(d *Data) error {
       return nil
    }
 }
+
+// Pillar is a system we need to store data into
+type Pillar struct {
+   Host string
+   Timeout time.Duration
+}
+
+// Store knows how to store data into Pillar
+func (*Pillar) Store(d *Data) error {
+   fmt.Println("Out:", d.Line)
+   return nil
+}
+
