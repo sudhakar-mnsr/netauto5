@@ -52,3 +52,31 @@ func (*Pillar) Store(d *Data) error {
    return nil
 }
 
+// ================================================================
+// System wraps Xenia and Pillar together into a single system
+type System struct {
+   Xenia
+   Pillar
+}
+// ================================================================
+// pull knows how to pull bulks of data from Xenia
+func pull(x *Xenia, data []Data) (int, error) {
+   for i := range data {
+      if err := x.pull(&data[i]); err != nil {
+         return i, err
+      }
+   }
+   return len(data), nil
+}
+
+// Store knows how to store bulks of data into Pillar
+func store(p *Pillar, data []Data) (int, error) {
+   for i := range data {
+      if err := p.Store(&data[i]); err != nil {
+         return i, err
+      }
+   }
+}
+ 
+
+
