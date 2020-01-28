@@ -95,4 +95,18 @@ func Copy(sys *System, batch int) error {
 }
 // ================================================================
 
-
+func main() {
+   sys := System{
+      Xenia: Xenia{
+         Host: "localhost:8000",
+         Timeout: time.Second,
+      },
+      Pillar: Pillar{
+         Host: "localhost:8000",
+         Timeout: time.Second,
+      },
+   }
+   if err := Copy(&sys, 3); err != io.EOF {
+      fmt.Println(err)
+   }
+}      
