@@ -60,3 +60,47 @@ func (*Pillar) Store(d *Data) error {
    fmt.Println("Out:", d.Line)
    return nil
 }
+// ============================================================================
+//System wraps Pullers and Stores together into a single system.
+type System struct {
+   Puller
+   Storer
+}
+// ============================================================================
+// pull knows how to pull bulks of data from any Puller
+func pull(p Puller, data []Data) (int, error) {
+   for i := range data {
+      if err := p.Pull(&data[i]); err != nil {
+         return i, err
+      }
+   }
+   return len(data), nil
+}
+
+// store knows how to store bulks of data from any Storer
+func store(s Storer, data []Data) (int, error) {
+   for i := range data {
+      if err := s.Store(&data[i]); err != nil {
+         return i, err
+      }
+   }
+   return len(data), nil
+}
+
+// Copy knows how to pull and store data from any system
+func Copy(sys *System, batch int) error {
+   data := make([]Data, batch)
+   for {
+      i, err := pull(sys, data)
+      if i > 0 {
+         if _, err := store(sys, data[:i]); err != nil {
+            return err
+         }
+      }
+      if err != nil {
+         return err
+      }
+   }
+}
+
+// ============================================================================
