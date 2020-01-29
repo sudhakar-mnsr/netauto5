@@ -101,3 +101,18 @@ func Copy(p Puller, s Storer, batch int) error {
    }
 }
 // =============================================================================
+func main() {
+   x := Xenia{
+      Host: "localhost: 8000",
+      Timeout: time.Second,
+   }
+   
+   p := Pillar{
+      Host: "localhost: 9000",
+      Timeout: time.Second,
+   }
+   
+   if err := Copy(&x, &p, 3); err != io.EOF {
+      fmt.Println(err)
+   }
+}
