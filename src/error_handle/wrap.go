@@ -36,3 +36,10 @@ func main() {
    }
 }  
    
+// firstCall makes a call to a second function and wraps any error
+func firstCall(i int) error {
+   if err := secondCall(i); err != nil {
+      return errors.Wrapf(err, "firstCall->secondCall(%d)", i)
+   }
+   return nil
+}
