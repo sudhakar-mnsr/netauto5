@@ -12,6 +12,8 @@ func (c *customError) Error() string {
 }
 
 // fail returns nil values for both return types.
+// Uncomment below for solution 
+// func fail() ([]byte, error) {
 func fail() ([]byte, *customError) {
    return nil, nil
 }
